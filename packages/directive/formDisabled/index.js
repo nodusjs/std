@@ -1,1 +1,1 @@
-export { default } from "./formAssociated";
+export { default } from "./formDisabled";
