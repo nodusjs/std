@@ -1,3 +1,5 @@
+import execute from "./execute";
+
 /**
  * Decorator que executa um método ao inserir o Custom Element no DOM.
  *
@@ -23,13 +25,7 @@
  *
  * customElements.define('my-element', MyElement);
  */
-const connected = (target, method) => {
-	target.connectedCallback = new Proxy(target.connectedCallback ?? (() => {}), {
-		apply(target, context, args) {
-			target.apply(context, args);
-			context[method]();
-		},
-	});
-};
+const connected = (target, method) =>
+	execute(method).on(target).after("connectedCallback");
 
 export default connected;

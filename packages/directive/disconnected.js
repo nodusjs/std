@@ -1,3 +1,5 @@
+import execute from "./execute";
+
 /**
  * Decorator que executa um método ao remover o Custom Element do DOM.
  *
@@ -22,16 +24,7 @@
  *
  * customElements.define('my-element', MyElement);
  */
-const disconnected = (target, method) => {
-	target.disconnectedCallback = new Proxy(
-		target.disconnectedCallback ?? (() => {}),
-		{
-			apply(original, context, args) {
-				original.apply(context, args);
-				context[method]();
-			},
-		},
-	);
-};
+const disconnected = (target, method) =>
+	execute(method).on(target).after("disconnectedCallback");
 
 export default disconnected;
