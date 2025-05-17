@@ -1,0 +1,33 @@
+import { describe, it, expect, vi } from "vitest";
+
+vi.mock("@directive/execute", () => {
+	return {
+		default: vi.fn(() => ({
+			on: vi.fn(() => ({ after: vi.fn() })),
+		})),
+	};
+});
+
+import execute from "@directive/execute";
+import formDisabled from "./formDisabled";
+
+describe("formDisabled", () => {
+	it("deve encadear corretamente execute -> on -> after", () => {
+		const after = vi.fn();
+		const on = vi.fn(() => ({ after }));
+		const exec = vi.fn(() => ({ on }));
+
+		execute.mockImplementation(exec);
+
+		class MyElement {
+			@formDisabled
+			onFormDisabled() {}
+		}
+
+		const target = MyElement.prototype;
+
+		expect(exec).toHaveBeenCalledWith("onFormDisabled");
+		expect(on).toHaveBeenCalledWith(target);
+		expect(after).toHaveBeenCalledWith("formDisabledCallback");
+	});
+});
