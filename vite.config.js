@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
+import terser from "@rollup/plugin-terser";
 
 export default defineConfig({
 	build: {
@@ -9,10 +10,19 @@ export default defineConfig({
 			},
 			formats: ["cjs", "es"],
 		},
+		minify: false,
 		outDir: "dist",
+		rollupOptions: {
+			plugins: [
+				terser({
+					format: {
+						comments: false,
+					},
+				}),
+			],
+		},
 		sourcemap: true,
 	},
-
 	resolve: {
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
