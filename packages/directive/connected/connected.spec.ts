@@ -33,6 +33,7 @@ describe("connected", () => {
 		}
 
 		const el = new MyElement();
+
 		expect(() => el.connectedCallback()).not.toThrow();
 		expect(log).toEqual(["decorated"]);
 	});
