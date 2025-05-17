@@ -13,7 +13,7 @@
  * original e executa o método decorado após a conclusão do callback.
  *
  * @example
- * import execute from './execute';
+ * import execute from '@directive/execute';
  *
  * execute('onConnect').on(MyElement.prototype).after('connectedCallback');
  *

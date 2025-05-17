@@ -1,4 +1,4 @@
-import execute from "./execute";
+import execute from "@directive/execute";
 
 /**
  * Decorator que executa um método ao mover o Custom Element para outro Document.
