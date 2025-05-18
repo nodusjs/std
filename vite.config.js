@@ -7,6 +7,7 @@ export default defineConfig({
 		lib: {
 			entry: {
 				directive: resolve(__dirname, "packages/directive/index.js"),
+				dom: resolve(__dirname, "packages/dom/index.js"),
 			},
 			formats: ["cjs", "es"],
 		},
@@ -26,6 +27,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
+			"@dom": resolve(__dirname, "packages/dom"),
 		},
 	},
 });
