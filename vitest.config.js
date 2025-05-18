@@ -5,6 +5,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
+			"@dom": resolve(__dirname, "packages/dom"),
 		},
 	},
 	test: {
