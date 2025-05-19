@@ -6,6 +6,7 @@ export default defineConfig({
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
 			"@dom": resolve(__dirname, "packages/dom"),
+			"@polyfill": resolve(__dirname, "packages/polyfill"),
 		},
 	},
 	test: {
