@@ -2,7 +2,7 @@
  * Registra a renderização de um componente com estilos quando o Custom Element é conectado ao DOM.
  *
  * @param {Function} component - Função que retorna o HTML do componente. Recebe `this` como argumento.
- * @returns {{ with: (styles: Function[]) => { from: (target: Object) => { whenConnected: () => void } } }}
+ * @returns {{ with: (styles: Function[]) => { on: (target: Object) => { whenConnected: () => void } } }}
  *
  * @description
  * O helper `render` permite executar de forma fluente a renderização de um componente,
@@ -15,7 +15,7 @@
  * @example
  * render(component)
  *   .with([style])
- *   .from(MyElement.prototype)
+ *   .on(MyElement.prototype)
  *   .whenConnected();
  */
 const render = (component) => ({
@@ -23,7 +23,7 @@ const render = (component) => ({
 	 * Define os estilos a serem aplicados ao shadowRoot ou document.
 	 *
 	 * @param {Function[]} styles - Lista de funções que retornam CSSStyleSheet (recebem `this`).
-	 * @returns {{ from: (target: Object) => { whenConnected: () => void } }}
+	 * @returns {{ on: (target: Object) => { whenConnected: () => void } }}
 	 */
 	with: (styles) => ({
 		/**
@@ -32,7 +32,7 @@ const render = (component) => ({
 		 * @param {Object} target - O prototype do Custom Element decorado.
 		 * @returns {{ whenConnected: () => void }}
 		 */
-		from: (target) => ({
+		on: (target) => ({
 			/**
 			 * Finaliza a definição e intercepta o connectedCallback para aplicar a renderização e os estilos.
 			 *
@@ -45,7 +45,7 @@ const render = (component) => ({
 						apply: async (original, context, args) => {
 							await original.apply(context, args);
 
-							const task = (resolve) => {
+							const paintCallbak = (resolve) => {
 								requestAnimationFrame(async () => {
 									const styleSheets = styles.map((style) => style(context));
 									(context.shadowRoot ?? document).adoptedStyleSheets =
@@ -58,7 +58,7 @@ const render = (component) => ({
 							};
 
 							await context.willPaintCallback?.();
-							await new Promise(task);
+							await new Promise(paintCallbak);
 							await context.didPaintCallback?.();
 						},
 					},
