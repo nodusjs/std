@@ -1,4 +1,5 @@
 import execute from "@dom/execute";
+import { didPaintCallback } from "@dom/interfaces";
 
 /**
  * Decorator que executa um método após a renderização do componente no ciclo de vida do DOM.
@@ -27,6 +28,6 @@ import execute from "@dom/execute";
  * }
  */
 const didPaint = (target, method) =>
-	execute(method).on(target).after("didPaintCallback");
+	execute(method).on(target).after(didPaintCallback);
 
 export default didPaint;

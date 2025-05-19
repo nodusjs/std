@@ -1,3 +1,10 @@
+import {
+	isPainted,
+	didPaintCallback,
+	paintCallback,
+	willPaintCallback,
+} from "@dom/interfaces";
+
 /**
  * Registra a renderização de um componente com estilos quando o Custom Element é conectado ao DOM.
  *
@@ -42,24 +49,24 @@ const render = (component) => ({
 				target.connectedCallback = new Proxy(
 					target.connectedCallback || (() => {}),
 					{
-						apply: async (original, context, args) => {
+						async apply(original, context, args) {
 							await original.apply(context, args);
 
-							const paintCallbak = (resolve) => {
+							context[paintCallback] = (resolve) => {
 								requestAnimationFrame(async () => {
 									const styleSheets = styles.map((style) => style(context));
 									(context.shadowRoot ?? document).adoptedStyleSheets =
 										await Promise.all(styleSheets);
 									(context.shadowRoot ?? context).innerHTML =
 										await component(context);
-									context.isPainted = true;
+									context[isPainted] = true;
 									resolve();
 								});
 							};
 
-							await context.willPaintCallback?.();
-							await new Promise(paintCallbak);
-							await context.didPaintCallback?.();
+							await context[willPaintCallback]?.();
+							await new Promise(context[paintCallback]);
+							await context[didPaintCallback]?.();
 						},
 					},
 				);

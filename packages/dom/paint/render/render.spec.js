@@ -1,4 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import {
+	isPainted,
+	didPaintCallback,
+	willPaintCallback,
+} from "@dom/interfaces";
 import render from "./render";
 
 describe("render", () => {
@@ -8,8 +13,8 @@ describe("render", () => {
 	beforeEach(() => {
 		context = {
 			shadowRoot: {},
-			willPaintCallback: vi.fn(),
-			didPaintCallback: vi.fn(),
+			[willPaintCallback]: vi.fn(),
+			[didPaintCallback]: vi.fn(),
 		};
 		target = {};
 	});
@@ -72,7 +77,7 @@ describe("render", () => {
 
 	it("deve executar willPaintCallback antes do render", async () => {
 		const order = [];
-		context.willPaintCallback = vi.fn(() => order.push("will"));
+		context[willPaintCallback] = vi.fn(() => order.push("will"));
 		const component = () => {
 			order.push("render");
 			return "ok";
@@ -86,7 +91,7 @@ describe("render", () => {
 
 	it("deve executar didPaintCallback após o render", async () => {
 		const order = [];
-		context.didPaintCallback = vi.fn(() => order.push("did"));
+		context[didPaintCallback] = vi.fn(() => order.push("did"));
 		const component = () => {
 			order.push("render");
 			return "ok";
@@ -104,7 +109,7 @@ describe("render", () => {
 		render(component).with([]).on(target).whenConnected();
 
 		await target.connectedCallback.call(context);
-		expect(context.isPainted).toBe(true);
+		expect(context[isPainted]).toBe(true);
 	});
 
 	it("deve usar document.adoptedStyleSheets quando shadowRoot não existir", async () => {

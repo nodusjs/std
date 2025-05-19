@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
+import { willPaintCallback } from "@dom/interfaces";
 
 vi.mock("@dom/execute", () => {
 	return {
@@ -28,6 +29,6 @@ describe("willPaint", () => {
 
 		expect(exec).toHaveBeenCalledWith("prepare");
 		expect(on).toHaveBeenCalledWith(MyElement.prototype);
-		expect(after).toHaveBeenCalledWith("willPaintCallback");
+		expect(after).toHaveBeenCalledWith(willPaintCallback);
 	});
 });
