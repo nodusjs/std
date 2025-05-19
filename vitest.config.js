@@ -12,7 +12,7 @@ export default defineConfig({
 		coverage: {
 			include: ["packages/**/*.{js,ts}"],
 			exclude: ["packages/**/index.{js,ts}"],
-			reporter: ["text"],
+			reporter: ["text", "lcov", "html"],
 			thresholds: {
 				statements: 80,
 				branches: 80,
