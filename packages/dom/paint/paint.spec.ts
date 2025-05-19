@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 
-vi.mock("@dom/render", () => {
+vi.mock("@dom/paint/render", () => {
 	return {
 		default: vi.fn(() => ({
 			with: vi.fn(() => ({
@@ -12,7 +12,7 @@ vi.mock("@dom/render", () => {
 	};
 });
 
-import render from "@dom/render";
+import render from "@dom/paint/render";
 import paint from "./paint";
 
 describe("paint", () => {

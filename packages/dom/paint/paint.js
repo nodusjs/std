@@ -1,4 +1,4 @@
-import render from "@dom/render";
+import render from "@dom/paint/render";
 
 /**
  * Decorator que renderiza um componente com estilos ao ser conectado ao DOM.
