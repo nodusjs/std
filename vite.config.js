@@ -8,6 +8,7 @@ export default defineConfig({
 			entry: {
 				directive: resolve(__dirname, "packages/directive/index.js"),
 				dom: resolve(__dirname, "packages/dom/index.js"),
+				event: resolve(__dirname, "packages/event/index.js"),
 			},
 			formats: ["cjs", "es"],
 		},
@@ -28,6 +29,7 @@ export default defineConfig({
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
 			"@dom": resolve(__dirname, "packages/dom"),
+			"@event": resolve(__dirname, "packages/event"),
 			"@polyfill": resolve(__dirname, "packages/polyfill"),
 		},
 	},
