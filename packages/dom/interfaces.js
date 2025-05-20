@@ -1,3 +1,10 @@
+/**
+ * Propriedade simbólica usada para indicar se o componente já foi renderizado.
+ *
+ * Essa flag é automaticamente definida como `true` após a execução do `paintCallback`,
+ * e é utilizada internamente por decorators como `@repaint` para condicionar a nova renderização
+ * apenas quando o componente já passou por uma renderização inicial.
+ */
 export const isPainted = Symbol("isPainted");
 
 /**
