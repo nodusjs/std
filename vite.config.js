@@ -8,6 +8,7 @@ export default defineConfig({
 			entry: {
 				directive: resolve(__dirname, "packages/directive/index.js"),
 				dom: resolve(__dirname, "packages/dom/index.js"),
+				echo: resolve(__dirname, "packages/echo/index.js"),
 				event: resolve(__dirname, "packages/event/index.js"),
 			},
 			formats: ["cjs", "es"],
@@ -29,8 +30,10 @@ export default defineConfig({
 		alias: {
 			"@directive": resolve(__dirname, "packages/directive"),
 			"@dom": resolve(__dirname, "packages/dom"),
+			"@echo": resolve(__dirname, "packages/echo"),
 			"@event": resolve(__dirname, "packages/event"),
 			"@polyfill": resolve(__dirname, "packages/polyfill"),
+			"@spark": resolve(__dirname, "packages/spark"),
 		},
 	},
 });
