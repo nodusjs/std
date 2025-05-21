@@ -1,0 +1,1 @@
+export { different } from "./different";

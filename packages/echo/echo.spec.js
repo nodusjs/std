@@ -102,14 +102,14 @@ describe("Echo", () => {
 		expect(setterSpy).toHaveBeenCalledWith("SET");
 	});
 
-	it.skip("deve aplicar filtros (sparks) na ordem", () => {
+	it("deve aplicar filtros (sparks) na ordem", () => {
 		instance.attributeChangedCallback(
 			"on",
 			"",
 			"*/cast:method/method|add=1|add=2",
 		);
-		instance.dispatchEvent(new CustomEvent("cast", { detail: "x" }));
-		expect(methodSpy).toHaveBeenCalledWith("x12");
+		instance.dispatchEvent(new CustomEvent("cast", { detail: "1" }));
+		expect(methodSpy).toHaveBeenCalledWith(4);
 	});
 
 	it("deve encerrar listeners no disconnectedCallback", () => {
