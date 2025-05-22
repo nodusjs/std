@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import truthy from "./truthy";
+import { truthy } from "./truthy";
 
 describe("trythy", () => {
 	it("deve retornar false para 'no'", () => {
