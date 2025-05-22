@@ -1,4 +1,4 @@
-import * as sparks from "@spark";
+import spark from "@spark";
 import target from "./target";
 import { connectArc, disconnectArc, on } from "./interfaces";
 
@@ -26,7 +26,7 @@ import { connectArc, disconnectArc, on } from "./interfaces";
  * }
  */
 const Echo = (Klass) => {
-	class Echo extends Klass {
+	class Host extends Klass {
 		#controllers = {};
 
 		/**
@@ -126,7 +126,7 @@ const Echo = (Klass) => {
 				.split("|")
 				.filter(Boolean)
 				.map((filter) => filter.split("="))
-				.map(([name, value]) => [sparks[name], value]);
+				.map(([name, value]) => [spark.get(name), value]);
 
 			target.addEventListener(
 				event,
@@ -170,7 +170,7 @@ const Echo = (Klass) => {
 		}
 	}
 
-	return Echo;
+	return Host;
 };
 
 export default Echo;

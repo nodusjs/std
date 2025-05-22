@@ -10,6 +10,7 @@ export default defineConfig({
 				dom: resolve(__dirname, "packages/dom/index.js"),
 				echo: resolve(__dirname, "packages/echo/index.js"),
 				event: resolve(__dirname, "packages/event/index.js"),
+				spark: resolve(__dirname, "packages/spark/index.js"),
 			},
 			formats: ["cjs", "es"],
 		},
