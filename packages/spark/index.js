@@ -1,4 +1,5 @@
 export { default } from "./spark";
+
 export { add } from "./add";
 export { dec } from "./dec";
 export { different } from "./different";
@@ -12,3 +13,4 @@ export { lte } from "./lte";
 export { not } from "./not";
 export { prop } from "./prop";
 export { subtract } from "./subtract";
+export { truthy } from "./truthy";
