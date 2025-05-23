@@ -12,6 +12,28 @@
 		"vite": "^6.3.5",
 		"vitest": "^3.1.3"
 	},
+	"exports": {
+		"./directive": {
+			"import": "dist/directive.js",
+			"require": "dist/directive.cjs"
+		},
+		"./dom": {
+			"import": "dist/dom.js",
+			"require": "dist/dom.cjs"
+		},
+		"./echo": {
+			"import": "dist/echo.js",
+			"require": "dist/echo.cjs"
+		},
+		"./event": {
+			"import": "dist/event.js",
+			"require": "dist/event.cjs"
+		},
+		"./spark": {
+			"import": "dist/spark.js",
+			"require": "dist/spark.cjs"
+		}
+	},
 	"files": ["dist"],
 	"license": "MIT",
 	"main": "dist/std.cjs",
@@ -29,5 +51,5 @@
 	},
 	"source": "src/index.js",
 	"type": "module",
-	"version": "0.16.0"
+	"version": "0.16.1"
 }
