@@ -16,12 +16,16 @@ describe("render", () => {
 			[willPaintCallback]: vi.fn(),
 			[didPaintCallback]: vi.fn(),
 		};
-		target = {};
+
+		target = {
+			prototype: {},
+		};
 	});
 
 	it("deve aplicar o adoptedStyleSheets com os valores de styles", async () => {
 		const sheet = {};
 		const style = vi.fn(() => sheet);
+
 		context.shadowRoot.adoptedStyleSheets = [];
 
 		render(() => "<div></div>")
@@ -29,7 +33,7 @@ describe("render", () => {
 			.on(target)
 			.whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(style).toHaveBeenCalledWith(context);
 		expect(context.shadowRoot.adoptedStyleSheets).toEqual([sheet]);
 	});
@@ -46,7 +50,7 @@ describe("render", () => {
 			.on(target)
 			.whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(context.shadowRoot.adoptedStyleSheets).toEqual([sheet1, sheet2]);
 	});
 
@@ -57,13 +61,13 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(context.shadowRoot.innerHTML).toBe(html);
 	});
 
 	it("deve executar tudo após o connectedCallback original", async () => {
 		const steps = [];
-		target.connectedCallback = () => steps.push("original");
+		target.prototype.connectedCallback = () => steps.push("original");
 		const component = () => {
 			steps.push("render");
 			return "<div></div>";
@@ -71,7 +75,7 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(steps).toEqual(["original", "render"]);
 	});
 
@@ -85,7 +89,7 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(order).toEqual(["will", "render"]);
 	});
 
@@ -99,7 +103,7 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(order).toEqual(["render", "did"]);
 	});
 
@@ -108,7 +112,7 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(context[isPainted]).toBe(true);
 	});
 
@@ -128,7 +132,7 @@ describe("render", () => {
 			.on(target)
 			.whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(globalAdopt).toHaveBeenCalledWith([sheet]);
 	});
 
@@ -139,7 +143,7 @@ describe("render", () => {
 
 		render(component).with([]).on(target).whenConnected();
 
-		await target.connectedCallback.call(context);
+		await target.prototype.connectedCallback.call(context);
 		expect(context.innerHTML).toBe(html);
 	});
 });

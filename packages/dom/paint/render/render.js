@@ -46,8 +46,8 @@ const render = (component) => ({
 			 * @returns {void}
 			 */
 			whenConnected: () => {
-				target.connectedCallback = new Proxy(
-					target.connectedCallback || (() => {}),
+				target.prototype.connectedCallback = new Proxy(
+					target.prototype.connectedCallback || (() => {}),
 					{
 						async apply(original, context, args) {
 							await original.apply(context, args);
