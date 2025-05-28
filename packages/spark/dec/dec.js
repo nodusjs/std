@@ -5,5 +5,5 @@
  * @returns {number}
  */
 export function dec(x) {
-  return x - 1;
+	return Number(x) - 1;
 }
