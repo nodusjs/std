@@ -1,7 +1,7 @@
 /**
  * Retorna o valor atual sem modificações.
  *
- * @param {*} x - Valor atual.
+ * @param {*} value - Valor atual.
  * @returns {*} - Mesmo valor passado como argumento.
  */
-export const always = (x) => x;
+export const always = (_token, value) => value;
