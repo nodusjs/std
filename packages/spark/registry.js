@@ -1,3 +1,4 @@
+import { always } from "./always";
 import { add } from "./add";
 import { dec } from "./dec";
 import { different } from "./different";
@@ -18,6 +19,7 @@ import { truthy } from "./truthy";
  * Cada chave corresponde ao nome da função utilizada no arco.
  */
 export const registry = {
+	always,
 	add,
 	dec,
 	different,
