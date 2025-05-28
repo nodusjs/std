@@ -6,5 +6,5 @@
  * @returns {boolean} `true` se `x == y`, senão `false`.
  */
 export function equals(x, y) {
-	return x == y;
+  return x == y;
 }

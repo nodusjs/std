@@ -27,6 +27,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const formReset = (target, method) =>
-	execute(method).on(target).after("formResetCallback");
+  execute(method).on(target).after("formResetCallback");
 
 export default formReset;

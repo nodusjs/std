@@ -18,9 +18,9 @@
  * truthy("");       // true
  */
 export function truthy(value) {
-	if (value === "no") return false;
-	if (value === "false") return false;
-	if (value === "0") return false;
-	if (value === null) return false;
-	return true;
+  if (value === "no") return false;
+  if (value === "false") return false;
+  if (value === "0") return false;
+  if (value === null) return false;
+  return true;
 }

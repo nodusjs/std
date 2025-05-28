@@ -25,6 +25,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const adopted = (target, method) =>
-	execute(method).on(target).after("adoptedCallback");
+  execute(method).on(target).after("adoptedCallback");
 
 export default adopted;

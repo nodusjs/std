@@ -27,6 +27,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const formStateRestore = (target, method) =>
-	execute(method).on(target).after("formStateRestoreCallback");
+  execute(method).on(target).after("formStateRestoreCallback");
 
 export default formStateRestore;

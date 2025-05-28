@@ -25,12 +25,12 @@ import execute from "@directive/attributeChanged/execute";
  * customElements.define('my-element', MyElement);
  */
 const attributeChanged =
-	(attribute, ...filters) =>
-	(target, property) => {
-		execute(property)
-			.with(filters)
-			.from(target)
-			.whenAttributeChanges(attribute);
-	};
+  (attribute, ...filters) =>
+  (target, property) => {
+    execute(property)
+      .with(filters)
+      .from(target)
+      .whenAttributeChanges(attribute);
+  };
 
 export default attributeChanged;

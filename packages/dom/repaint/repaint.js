@@ -1,9 +1,9 @@
 import "@polyfill/setImmediate";
 import {
-	isPainted,
-	didPaintCallback,
-	paintCallback,
-	willPaintCallback,
+  didPaintCallback,
+  isPainted,
+  paintCallback,
+  willPaintCallback,
 } from "@dom/interfaces";
 
 /**
@@ -37,25 +37,25 @@ import {
  * }
  */
 const repaint = (_target, _propertyKey, descriptor) => {
-	const apply = (original, context, args) => {
-		setImmediate(async () => {
-			if (context[isPainted]) {
-				await context[willPaintCallback]?.();
-				await new Promise(context[paintCallback]);
-				await context[didPaintCallback]?.();
-			}
-		});
+  const apply = (original, context, args) => {
+    setImmediate(async () => {
+      if (context[isPainted]) {
+        await context[willPaintCallback]?.();
+        await new Promise(context[paintCallback]);
+        await context[didPaintCallback]?.();
+      }
+    });
 
-		return original.apply(context, args);
-	};
+    return original.apply(context, args);
+  };
 
-	if (descriptor.set) {
-		descriptor.set = new Proxy(descriptor.set, { apply });
-	}
+  if (descriptor.set) {
+    descriptor.set = new Proxy(descriptor.set, { apply });
+  }
 
-	if (descriptor.value) {
-		descriptor.value = new Proxy(descriptor.value, { apply });
-	}
+  if (descriptor.value) {
+    descriptor.value = new Proxy(descriptor.value, { apply });
+  }
 };
 
 export default repaint;

@@ -13,34 +13,34 @@ import { registry } from "./registry";
  * spark.set("double", x => x * 2)
  */
 const spark = {
-	/**
-	 * Recupera uma função registrada pelo nome.
-	 *
-	 * @param {string} name - Nome do spark.
-	 * @returns {Function} A função correspondente ou uma função no-op.
-	 *
-	 * @example
-	 * spark.get("len")("abc") // 3
-	 * spark.get("desconhecido")(42) // 42 (no-op)
-	 */
-	get(name) {
-		return registry[name] ?? ((x) => x);
-	},
+  /**
+   * Recupera uma função registrada pelo nome.
+   *
+   * @param {string} name - Nome do spark.
+   * @returns {Function} A função correspondente ou uma função no-op.
+   *
+   * @example
+   * spark.get("len")("abc") // 3
+   * spark.get("desconhecido")(42) // 42 (no-op)
+   */
+  get(name) {
+    return registry[name] ?? ((x) => x);
+  },
 
-	/**
-	 * Registra uma nova função spark.
-	 *
-	 * @param {string} name - Nome da função.
-	 * @param {Function} fn - Função a ser registrada.
-	 * @returns {typeof spark} Retorna a própria API para encadeamento.
-	 *
-	 * @example
-	 * spark.set("square", x => x * x)
-	 */
-	set(name, fn) {
-		registry[name] = fn;
-		return spark;
-	},
+  /**
+   * Registra uma nova função spark.
+   *
+   * @param {string} name - Nome da função.
+   * @param {Function} fn - Função a ser registrada.
+   * @returns {typeof spark} Retorna a própria API para encadeamento.
+   *
+   * @example
+   * spark.set("square", x => x * x)
+   */
+  set(name, fn) {
+    registry[name] = fn;
+    return spark;
+  },
 };
 
 export default spark;

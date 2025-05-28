@@ -25,6 +25,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const disconnected = (target, method) =>
-	execute(method).on(target).after("disconnectedCallback");
+  execute(method).on(target).after("disconnectedCallback");
 
 export default disconnected;

@@ -23,69 +23,69 @@
  *   .call('handleClick');
  */
 const listen = (type) => ({
-	/**
-	 * Define o seletor CSS do elemento alvo dentro do Shadow DOM.
-	 *
-	 * @param {string} selector - Seletor do elemento a ser escutado.
-	 * @returns {{ with: (...filters: Function[]) => { in: (target: Object) => { call: (method: string|symbol) => void } } }}
-	 */
-	on: (selector) => ({
-		/**
-		 * Define os filtros a serem aplicados ao evento capturado.
-		 *
-		 * @param {...Function} filters - Funções que recebem o evento e retornam uma transformação.
-		 * @returns {{ in: (target: Object) => { call: (method: string|symbol) => void } }}
-		 */
-		with: (...filters) => ({
-			/**
-			 * Define o protótipo do Custom Element onde os callbacks serão interceptados.
-			 *
-			 * @param {Object} target - O alvo que terá o connected/disconnected interceptado.
-			 * @returns {{ call: (method: string|symbol) => void }}
-			 */
-			in: (target) => ({
-				/**
-				 * Define o método a ser chamado com o resultado dos filtros aplicados ao evento.
-				 *
-				 * @param {string|symbol} method - Nome do método que será chamado.
-				 * @returns {void}
-				 */
-				call: (method) => {
-					const controller = new AbortController();
-					const options = { signal: controller.signal };
+  /**
+   * Define o seletor CSS do elemento alvo dentro do Shadow DOM.
+   *
+   * @param {string} selector - Seletor do elemento a ser escutado.
+   * @returns {{ with: (...filters: Function[]) => { in: (target: Object) => { call: (method: string|symbol) => void } } }}
+   */
+  on: (selector) => ({
+    /**
+     * Define os filtros a serem aplicados ao evento capturado.
+     *
+     * @param {...Function} filters - Funções que recebem o evento e retornam uma transformação.
+     * @returns {{ in: (target: Object) => { call: (method: string|symbol) => void } }}
+     */
+    with: (...filters) => ({
+      /**
+       * Define o protótipo do Custom Element onde os callbacks serão interceptados.
+       *
+       * @param {Object} target - O alvo que terá o connected/disconnected interceptado.
+       * @returns {{ call: (method: string|symbol) => void }}
+       */
+      in: (target) => ({
+        /**
+         * Define o método a ser chamado com o resultado dos filtros aplicados ao evento.
+         *
+         * @param {string|symbol} method - Nome do método que será chamado.
+         * @returns {void}
+         */
+        call: (method) => {
+          const controller = new AbortController();
+          const options = { signal: controller.signal };
 
-					target.connectedCallback = new Proxy(
-						target.connectedCallback ?? (() => {}),
-						{
-							apply(original, context, args) {
-								const listener = (event) => {
-									if (event.target.matches(selector)) {
-										context[method](
-											filters.reduce((target, filter) => filter(target), event),
-										);
-									}
-								};
+          target.connectedCallback = new Proxy(
+            target.connectedCallback ?? (() => {}),
+            {
+              apply(original, context, args) {
+                const listener = (event) => {
+                  if (event.target.matches(selector)) {
+                    context[method](
+                      filters.reduce((target, filter) => filter(target), event),
+                    );
+                  }
+                };
 
-								context.shadowRoot?.addEventListener(type, listener, options);
+                context.shadowRoot?.addEventListener(type, listener, options);
 
-								return original.apply(context, args);
-							},
-						},
-					);
+                return original.apply(context, args);
+              },
+            },
+          );
 
-					target.disconnectedCallback = new Proxy(
-						target.disconnectedCallback ?? (() => {}),
-						{
-							apply(original, context, args) {
-								controller.abort();
-								return original.apply(context, args);
-							},
-						},
-					);
-				},
-			}),
-		}),
-	}),
+          target.disconnectedCallback = new Proxy(
+            target.disconnectedCallback ?? (() => {}),
+            {
+              apply(original, context, args) {
+                controller.abort();
+                return original.apply(context, args);
+              },
+            },
+          );
+        },
+      }),
+    }),
+  }),
 });
 
 export default listen;

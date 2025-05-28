@@ -27,6 +27,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const formDisabled = (target, method) =>
-	execute(method).on(target).after("formDisabledCallback");
+  execute(method).on(target).after("formDisabledCallback");
 
 export default formDisabled;

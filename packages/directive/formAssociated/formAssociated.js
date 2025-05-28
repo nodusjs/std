@@ -27,6 +27,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const formAssociated = (target, method) =>
-	execute(method).on(target).after("formAssociatedCallback");
+  execute(method).on(target).after("formAssociatedCallback");
 
 export default formAssociated;

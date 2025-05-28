@@ -6,5 +6,5 @@
  * @returns {boolean}
  */
 export function gte(x, y) {
-	return x >= y;
+  return x >= y;
 }

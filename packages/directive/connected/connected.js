@@ -26,6 +26,6 @@ import execute from "@directive/execute";
  * customElements.define('my-element', MyElement);
  */
 const connected = (target, method) =>
-	execute(method).on(target).after("connectedCallback");
+  execute(method).on(target).after("connectedCallback");
 
 export default connected;

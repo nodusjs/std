@@ -27,8 +27,8 @@ import render from "@dom/paint/render";
  * }
  */
 const paint =
-	(component, ...styles) =>
-	(target) =>
-		render(component).with(styles).on(target).whenConnected();
+  (component, ...styles) =>
+  (target) =>
+    render(component).with(styles).on(target).whenConnected();
 
 export default paint;

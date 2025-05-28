@@ -6,5 +6,5 @@
  * @returns {number}
  */
 export function subtract(x, y) {
-	return x - Number(y);
+  return x - Number(y);
 }

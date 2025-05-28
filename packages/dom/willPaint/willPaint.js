@@ -28,6 +28,6 @@ import { willPaintCallback } from "@dom/interfaces";
  * }
  */
 const willPaint = (target, method) =>
-	execute(method).on(target).after(willPaintCallback);
+  execute(method).on(target).after(willPaintCallback);
 
 export default willPaint;

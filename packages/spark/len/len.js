@@ -5,5 +5,5 @@
  * @returns {number}
  */
 export function len(x) {
-	return Object.keys(x ?? {})?.length;
+  return Object.keys(x ?? {})?.length;
 }

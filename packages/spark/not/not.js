@@ -5,5 +5,5 @@
  * @returns {boolean}
  */
 export function not(x) {
-	return !x;
+  return !x;
 }

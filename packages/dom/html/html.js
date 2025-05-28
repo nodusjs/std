@@ -18,10 +18,10 @@
  * console.log(htmlOutput); // "<h1>Olá, Clebão!</h1>"
  */
 const html = (strings, ...values) => {
-	return String.raw(
-		{ raw: strings },
-		...values.map((value) => [].concat(value).join("")),
-	);
+  return String.raw(
+    { raw: strings },
+    ...values.map((value) => [].concat(value).join("")),
+  );
 };
 
 export default html;

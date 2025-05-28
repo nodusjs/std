@@ -1,8 +1,8 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { inc } from "./inc";
 
 describe("inc", () => {
-	it("deve incrementar um número", () => {
-		expect(inc(1)).toBe(2);
-	});
+  it("deve incrementar um número", () => {
+    expect(inc(1)).toBe(2);
+  });
 });

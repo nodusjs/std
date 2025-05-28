@@ -1,53 +1,53 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import css from "./css";
 
 describe("css", () => {
-	beforeEach(() => {
-		vi.stubGlobal(
-			"CSSStyleSheet",
-			class {
-				constructor() {
-					this.rules = [];
-				}
+  beforeEach(() => {
+    vi.stubGlobal(
+      "CSSStyleSheet",
+      class {
+        constructor() {
+          this.rules = [];
+        }
 
-				replaceSync(cssText) {
-					this.rules.push(cssText);
-				}
+        replaceSync(cssText) {
+          this.rules.push(cssText);
+        }
 
-				get cssRules() {
-					return this.rules.map((rule) => ({ cssText: rule }));
-				}
-			},
-		);
-	});
+        get cssRules() {
+          return this.rules.map((rule) => ({ cssText: rule }));
+        }
+      },
+    );
+  });
 
-	it("deve retornar uma instância de CSSStyleSheet", () => {
-		const result = css``;
-		expect(result).toBeInstanceOf(CSSStyleSheet);
-	});
+  it("deve retornar uma instância de CSSStyleSheet", () => {
+    const result = css``;
+    expect(result).toBeInstanceOf(CSSStyleSheet);
+  });
 
-	it("deve aplicar regras CSS corretamente", () => {
-		const color = "red";
-		const sheet = css`
+  it("deve aplicar regras CSS corretamente", () => {
+    const color = "red";
+    const sheet = css`
       :host {
         color: ${color};
       }
     `;
-		const rules = sheet.cssRules.map((r) => r.cssText);
+    const rules = sheet.cssRules.map((r) => r.cssText);
 
-		expect(rules[0]).toContain("color: red");
-	});
+    expect(rules[0]).toContain("color: red");
+  });
 
-	it("deve interpolar múltiplos valores no template", () => {
-		const prop = "font-size";
-		const size = "16px";
-		const sheet = css`
+  it("deve interpolar múltiplos valores no template", () => {
+    const prop = "font-size";
+    const size = "16px";
+    const sheet = css`
       :host {
         ${prop}: ${size};
       }
     `;
-		const rule = sheet.cssRules[0].cssText;
+    const rule = sheet.cssRules[0].cssText;
 
-		expect(rule).toContain("font-size: 16px");
-	});
+    expect(rule).toContain("font-size: 16px");
+  });
 });
