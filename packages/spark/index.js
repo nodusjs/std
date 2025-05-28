@@ -1,5 +1,6 @@
 export { default } from "./spark";
 
+export { always } from "./always";
 export { add } from "./add";
 export { dec } from "./dec";
 export { different } from "./different";
