@@ -5,7 +5,7 @@
  * e é utilizada internamente por decorators como `@repaint` para condicionar a nova renderização
  * apenas quando o componente já passou por uma renderização inicial.
  */
-export const isPainted = Symbol("isPainted");
+export const isPainted = Symbol.from("isPainted");
 
 /**
  * Identificador exclusivo para o callback executado após a renderização do componente.
