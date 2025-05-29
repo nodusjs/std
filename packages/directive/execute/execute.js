@@ -38,7 +38,7 @@ const execute = (method) => ({
       target[event] = new Proxy(target[event] || (() => {}), {
         apply(original, context, args) {
           original.apply(context, args);
-          context[method]();
+          context[method](...args);
         },
       });
     },
