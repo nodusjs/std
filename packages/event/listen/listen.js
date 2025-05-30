@@ -66,6 +66,7 @@ const listen = (type) => ({
                   }
                 };
 
+                context.addEventListener(type, listener, options);
                 context.shadowRoot?.addEventListener(type, listener, options);
 
                 return original.apply(context, args);
