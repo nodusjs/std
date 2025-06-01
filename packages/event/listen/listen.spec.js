@@ -11,6 +11,7 @@ describe("listen", () => {
     };
 
     element = {
+      addEventListener: vi.fn(),
       shadowRoot,
     };
   });
