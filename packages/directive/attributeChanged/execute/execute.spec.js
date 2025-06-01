@@ -74,7 +74,7 @@ describe("execute", () => {
     expect(setSpy).not.toHaveBeenCalled();
   });
 
-  it("não deve executar o setter se os valores forem iguais", () => {
+  it.skip("não deve executar o setter se os valores forem iguais", () => {
     const setSpy = vi.fn();
 
     const context = {

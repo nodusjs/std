@@ -49,7 +49,7 @@ const execute = (property) => ({
           {
             apply(original, context, [name, oldValue, newValue]) {
               original.apply(context, [name, oldValue, newValue]);
-              if (name === attribute && oldValue !== newValue) {
+              if (name === attribute) {
                 context[property] = filters.reduce((v, fn) => fn(v), newValue);
               }
             },
