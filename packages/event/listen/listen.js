@@ -51,13 +51,15 @@ const listen = (type) => ({
          * @returns {void}
          */
         call: (method) => {
-          const controller = new AbortController();
-          const options = { signal: controller.signal };
+          const controller = Symbol("controller");
 
           target.connectedCallback = new Proxy(
             target.connectedCallback ?? (() => {}),
             {
               apply(original, context, args) {
+                context[controller] = new AbortController();
+
+                const options = { signal: context[controller].signal };
                 const listener = (event) => {
                   if (event.target.matches(selector)) {
                     context[method](
@@ -77,7 +79,7 @@ const listen = (type) => ({
             target.disconnectedCallback ?? (() => {}),
             {
               apply(original, context, args) {
-                controller.abort();
+                context[controller].abort();
                 return original.apply(context, args);
               },
             },
