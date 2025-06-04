@@ -1,17 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { controller } from "./interface";
 import listen from "./listen";
 
 describe("listen", () => {
+  let control;
   let element;
   let shadowRoot;
 
   beforeEach(() => {
+    control = {
+      abort: vi.fn(),
+    };
+
     shadowRoot = {
       addEventListener: vi.fn(),
     };
 
     element = {
       addEventListener: vi.fn(),
+      [controller]: control,
       shadowRoot,
     };
   });

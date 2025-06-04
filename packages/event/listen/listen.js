@@ -1,3 +1,5 @@
+import { controller } from "./interface";
+
 /**
  * Registra um listener para eventos delegados no Shadow DOM de um Custom Element.
  *
@@ -51,8 +53,6 @@ const listen = (type) => ({
          * @returns {void}
          */
         call: (method) => {
-          const controller = Symbol("controller");
-
           target.connectedCallback = new Proxy(
             target.connectedCallback ?? (() => {}),
             {
