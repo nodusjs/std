@@ -86,5 +86,3 @@ No GitHub, abra um PR da sua branch **minha-feature-std** para **main**. No corp
 ## Código de Conduta
 
 Ao contribuir para **@nodusjs/std**, você concorda em seguir nosso [Código de Conduta](https://github.com/nodusjs/std/blob/main/CODE_OF_CONDUCT.md) e ajudar a manter um ambiente acolhedor e produtivo para todos.
-
-> Agradecemos sua contribuição e seu tempo dedicado ao **@nodusjs/std**! 🚀
