@@ -1,4 +1,6 @@
+import execute from "@directive/attributeChanged/execute";
 import { describe, expect, it, vi } from "vitest";
+import attributeChanged from "./attributeChanged";
 
 vi.mock("@directive/attributeChanged/execute", () => {
   return {
@@ -12,26 +14,25 @@ vi.mock("@directive/attributeChanged/execute", () => {
   };
 });
 
-import execute from "@directive/attributeChanged/execute";
-import attributeChanged from "./attributeChanged";
-
 describe("attributeChanged (uso do execute)", () => {
   it("deve encadear corretamente execute -> with -> from -> whenAttributeChanges", () => {
-    const whenAttributeChanges = vi.fn();
-    const from = vi.fn(() => ({ whenAttributeChanges }));
-    const withFilters = vi.fn(() => ({ from }));
-    const exec = vi.fn(() => ({ with: withFilters }));
+    const whenAttributeChangesMock = vi.fn();
+    const fromMock = vi.fn(() => ({
+      whenAttributeChanges: whenAttributeChangesMock,
+    }));
+    const withMock = vi.fn(() => ({ from: fromMock }));
+    const executeMock = vi.fn(() => ({ with: withMock }));
 
-    execute.mockImplementation(exec);
+    execute.mockImplementation(executeMock);
 
     class MyElement {
       @attributeChanged("visible", Boolean)
       set visible(_) {}
     }
 
-    expect(exec).toHaveBeenCalledWith("visible");
-    expect(withFilters).toHaveBeenCalledWith([Boolean]);
-    expect(from).toHaveBeenCalledWith(MyElement.prototype);
-    expect(whenAttributeChanges).toHaveBeenCalledWith("visible");
+    expect(executeMock).toHaveBeenCalledWith("visible");
+    expect(withMock).toHaveBeenCalledWith([Boolean]);
+    expect(fromMock).toHaveBeenCalledWith(MyElement.prototype);
+    expect(whenAttributeChangesMock).toHaveBeenCalledWith("visible");
   });
 });
