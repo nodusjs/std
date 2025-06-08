@@ -1,7 +1,8 @@
 import {
+  cssCallback,
   didPaintCallback,
+  htmlCallback,
   isPainted,
-  paintCallback,
   willPaintCallback,
 } from "@dom/interfaces";
 
@@ -52,20 +53,29 @@ const render = (component) => ({
             async apply(original, context, args) {
               await original.apply(context, args);
 
-              context[paintCallback] = (resolve) => {
+              context[htmlCallback] = (resolve) => {
+                requestAnimationFrame(async () => {
+                  (context.shadowRoot ?? context).innerHTML =
+                    await component(context);
+                  resolve();
+                });
+              };
+
+              context[cssCallback] = (resolve) => {
                 requestAnimationFrame(async () => {
                   const styleSheets = styles.map((style) => style(context));
                   (context.shadowRoot ?? document).adoptedStyleSheets =
                     await Promise.all(styleSheets);
-                  (context.shadowRoot ?? context).innerHTML =
-                    await component(context);
-                  context[isPainted] = true;
                   resolve();
                 });
               };
 
               await context[willPaintCallback]?.();
-              await new Promise(context[paintCallback]);
+              await Promise.all([
+                new Promise(context[htmlCallback]),
+                new Promise(context[cssCallback]),
+              ]);
+              context[isPainted] = true;
               await context[didPaintCallback]?.();
             },
           },
