@@ -16,13 +16,25 @@ export const isPainted = Symbol.for("isPainted");
 export const didPaintCallback = Symbol("didPaintCallback");
 
 /**
- * Identificador exclusivo para o callback de renderização principal do componente.
+ * Identificador exclusivo para o callback de atualização do conteúdo HTML do componente.
  *
- * É utilizado pelo helper `paint` como ponto central para renderizar o HTML e aplicar estilos
- * ao `shadowRoot` ou ao próprio componente. Serve como marcador intermediário entre os callbacks
- * `willPaint` e `didPaint`.
+ * Esse callback é invocado durante o processo de `paint` ou `repaint`, e é responsável por
+ * renderizar o HTML no `shadowRoot` (ou no elemento diretamente, caso o `shadowRoot` não exista).
+ *
+ * Pode ser usado isoladamente com decorators como `@html`, ou em conjunto com `@paint` e `@repaint`.
  */
-export const paintCallback = Symbol("paintCallback");
+export const htmlCallback = Symbol("htmlCallback");
+
+/**
+ * Identificador exclusivo para o callback de aplicação de estilos do componente.
+ *
+ * Esse callback é chamado para obter os estilos (CSSStyleSheet) que devem ser aplicados
+ * via `adoptedStyleSheets`. Ele pode ser utilizado de forma isolada através do decorator `@retouch`
+ * ou combinado em fluxos mais amplos como `@paint`.
+ *
+ * Deve retornar uma instância de `CSSStyleSheet` ou uma Promise que resolve para ela.
+ */
+export const cssCallback = Symbol("cssCallback");
 
 /**
  * Identificador exclusivo para o callback executado antes da renderização do componente.
