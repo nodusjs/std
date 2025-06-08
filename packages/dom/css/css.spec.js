@@ -3,8 +3,8 @@ import css from "./css";
 
 describe("css", () => {
   it("deve retornar uma instância de CSSStyleSheet", () => {
-    const result = css``;
-    expect(result).toBeInstanceOf(CSSStyleSheet);
+    const sheet = css``;
+    expect(sheet).toBeInstanceOf(CSSStyleSheet);
   });
 
   it("deve aplicar regras CSS corretamente", () => {
