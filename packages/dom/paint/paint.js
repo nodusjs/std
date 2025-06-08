@@ -18,10 +18,10 @@ import render from "@dom/paint/render";
  * @example
  * import { paint } from '@nodusjs/std/dom';
  *
- * const render = (el) => `<p>Hello, ${el.name}</p>`;
+ * const component = (el) => `<p>Hello, ${el.name}</p>`;
  * const style = (el) => new CSSStyleSheet();
  *
- * @paint(render, style)
+ * @paint(component, style)
  * class MyElement extends HTMLElement {
  *   name = 'world';
  * }
