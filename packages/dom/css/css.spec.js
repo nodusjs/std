@@ -2,25 +2,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import css from "./css";
 
 describe("css", () => {
-  beforeEach(() => {
-    vi.stubGlobal(
-      "CSSStyleSheet",
-      class {
-        constructor() {
-          this.rules = [];
-        }
-
-        replaceSync(cssText) {
-          this.rules.push(cssText);
-        }
-
-        get cssRules() {
-          return this.rules.map((rule) => ({ cssText: rule }));
-        }
-      },
-    );
-  });
-
   it("deve retornar uma instância de CSSStyleSheet", () => {
     const result = css``;
     expect(result).toBeInstanceOf(CSSStyleSheet);
