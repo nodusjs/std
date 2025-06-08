@@ -1,5 +1,7 @@
+import execute from "@dom/execute";
 import { didPaintCallback } from "@dom/interfaces";
 import { describe, expect, it, vi } from "vitest";
+import didPaint from "./didPaint";
 
 vi.mock("@dom/execute", () => {
   return {
@@ -11,24 +13,21 @@ vi.mock("@dom/execute", () => {
   };
 });
 
-import execute from "@dom/execute";
-import didPaint from "./didPaint";
-
 describe("didPaint", () => {
   it("deve encadear corretamente execute -> on -> after", () => {
-    const after = vi.fn();
-    const on = vi.fn(() => ({ after }));
-    const exec = vi.fn(() => ({ on }));
+    const afterMock = vi.fn();
+    const onMock = vi.fn(() => ({ after: afterMock }));
+    const executeMock = vi.fn(() => ({ on: onMock }));
 
-    execute.mockImplementation(exec);
+    execute.mockImplementation(executeMock);
 
     class MyElement {
       @didPaint
       finalize() {}
     }
 
-    expect(exec).toHaveBeenCalledWith("finalize");
-    expect(on).toHaveBeenCalledWith(MyElement.prototype);
-    expect(after).toHaveBeenCalledWith(didPaintCallback);
+    expect(executeMock).toHaveBeenCalledWith("finalize");
+    expect(onMock).toHaveBeenCalledWith(MyElement.prototype);
+    expect(afterMock).toHaveBeenCalledWith(didPaintCallback);
   });
 });
