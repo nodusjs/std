@@ -15,7 +15,6 @@ describe("css", () => {
       }
     `;
     const rules = sheet.cssRules.map((r) => r.cssText);
-
     expect(rules[0]).toContain("color: red");
   });
 
@@ -28,7 +27,6 @@ describe("css", () => {
       }
     `;
     const rule = sheet.cssRules[0].cssText;
-
     expect(rule).toContain("font-size: 16px");
   });
 });
