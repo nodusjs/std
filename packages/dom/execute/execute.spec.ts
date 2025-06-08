@@ -38,7 +38,7 @@ describe("execute", () => {
 
     expect(() => element.paintCallback()).not.toThrow();
 
-    await new Promise((r) => setTimeout(r, 0));
+    await Promise.resolve();
 
     expect(log).toEqual(["decorated"]);
   });
