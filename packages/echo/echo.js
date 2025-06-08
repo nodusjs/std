@@ -143,7 +143,7 @@ const Echo = (Klass) => {
               token,
             );
 
-            if (/method$/i.test(type)) this[sink](payload);
+            if (/method$/i.test(type)) this[sink]?.(payload);
             if (/attribute$/i.test(type)) this.setAttribute(sink, payload);
             if (/setter$/i.test(type)) this[sink] = payload;
           }
