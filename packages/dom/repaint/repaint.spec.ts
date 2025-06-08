@@ -1,108 +1,124 @@
 import {
+  cssCallback,
   didPaintCallback,
+  htmlCallback,
   isPainted,
-  paintCallback,
   willPaintCallback,
 } from "@dom/interfaces";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import repaint from "./repaint";
 
 describe("repaint", () => {
   it("deve funcionar corretamente em um setter", async () => {
-    const log = [];
+    const steps = [];
 
     class MyElement {
       [isPainted] = true;
 
       [willPaintCallback]() {
-        log.push("will");
+        steps.push("will");
       }
 
-      [paintCallback](resolve) {
-        log.push("paint");
+      [htmlCallback](resolve) {
+        steps.push("html");
+        resolve();
+      }
+
+      [cssCallback](resolve) {
+        steps.push("css");
         resolve();
       }
 
       [didPaintCallback]() {
-        log.push("did");
+        steps.push("did");
       }
 
       @repaint
       set value(_) {
-        log.push("set");
+        steps.push("set");
       }
     }
 
-    const el = new MyElement();
-    el.value = 42;
+    const element = new MyElement();
+    element.value = 42;
 
     await new Promise((r) => setTimeout(r, 100));
 
-    expect(log).toEqual(["set", "will", "paint", "did"]);
+    expect(steps).toEqual(["set", "will", "html", "css", "did"]);
   });
 
   it("deve funcionar corretamente em um método", async () => {
-    const log = [];
+    const steps = [];
 
     class MyElement {
       [isPainted] = true;
 
       [willPaintCallback]() {
-        log.push("will");
+        steps.push("will");
       }
 
-      [paintCallback](resolve) {
-        log.push("paint");
+      [htmlCallback](resolve) {
+        steps.push("html");
+        resolve();
+      }
+
+      [cssCallback](resolve) {
+        steps.push("css");
         resolve();
       }
 
       [didPaintCallback]() {
-        log.push("did");
+        steps.push("did");
       }
 
       @repaint
       trigger() {
-        log.push("method");
+        steps.push("method");
       }
     }
 
-    const el = new MyElement();
-    el.trigger();
+    const element = new MyElement();
+    element.trigger();
 
     await new Promise((r) => setTimeout(r, 10));
-    expect(log).toEqual(["method", "will", "paint", "did"]);
+    expect(steps).toEqual(["method", "will", "html", "css", "did"]);
   });
 
   it("não deve disparar os callbacks de render se isPainted = false", async () => {
-    const log = [];
+    const steps = [];
 
     class MyElement {
       [isPainted] = false;
 
       [willPaintCallback]() {
-        log.push("will");
+        steps.push("will");
       }
 
-      [paintCallback](resolve) {
-        log.push("paint");
+      [htmlCallback](resolve) {
+        steps.push("html");
+        resolve();
+      }
+
+      [cssCallback](resolve) {
+        steps.push("css");
         resolve();
       }
 
       [didPaintCallback]() {
-        log.push("did");
+        steps.push("did");
       }
 
       @repaint
       trigger() {
-        log.push("method");
+        steps.push("method");
       }
     }
 
-    const el = new MyElement();
-    el.trigger();
+    const element = new MyElement();
+    element.trigger();
 
     await new Promise((r) => setTimeout(r, 100));
 
-    expect(log).toEqual(["method"]);
+    expect(steps).toEqual(["method"]);
   });
 });

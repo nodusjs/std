@@ -1,8 +1,9 @@
 import "@polyfill/setImmediate";
 import {
+  cssCallback,
   didPaintCallback,
+  htmlCallback,
   isPainted,
-  paintCallback,
   willPaintCallback,
 } from "@dom/interfaces";
 
@@ -41,7 +42,10 @@ const repaint = (_target, _propertyKey, descriptor) => {
     setImmediate(async () => {
       if (context[isPainted]) {
         await context[willPaintCallback]?.();
-        await new Promise(context[paintCallback]);
+        await Promise.all([
+          new Promise(context[htmlCallback]),
+          new Promise(context[cssCallback]),
+        ]);
         await context[didPaintCallback]?.();
       }
     });
