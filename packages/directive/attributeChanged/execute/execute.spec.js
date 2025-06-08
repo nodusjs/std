@@ -3,48 +3,48 @@ import execute from "./execute";
 
 describe("execute", () => {
   it("deve registrar o atributo como observado", () => {
-    class Dummy {
+    class MyElement {
       static observedAttributes = [];
     }
 
     execute("visible")
       .with([])
-      .from(Dummy.prototype)
+      .from(MyElement.prototype)
       .whenAttributeChanges("visible");
 
-    expect(Dummy.observedAttributes).toContain("visible");
+    expect(MyElement.observedAttributes).toContain("visible");
   });
 
   it("deve preservar outros atributos observados existentes", () => {
-    class Dummy {
+    class MyElement {
       static observedAttributes = ["other"];
     }
 
     execute("visible")
       .with([])
-      .from(Dummy.prototype)
+      .from(MyElement.prototype)
       .whenAttributeChanges("visible");
 
-    expect(Dummy.observedAttributes).toEqual(["other", "visible"]);
+    expect(MyElement.observedAttributes).toEqual(["other", "visible"]);
   });
 
   it("deve executar o setter quando o atributo correto for alterado", () => {
     const setSpy = vi.fn();
 
-    class Dummy {
+    class MyElement {
       set visible(value) {
         setSpy(value);
       }
     }
 
-    const context = new Dummy();
+    const element = new MyElement();
 
     execute("visible")
       .with([(v) => v === "true"])
-      .from(Dummy.prototype)
+      .from(MyElement.prototype)
       .whenAttributeChanges("visible");
 
-    context.attributeChangedCallback("visible", "false", "true");
+    element.attributeChangedCallback("visible", "false", "true");
 
     expect(setSpy).toHaveBeenCalledWith(true);
   });
@@ -52,20 +52,20 @@ describe("execute", () => {
   it("não deve executar o setter se o atributo não corresponder", () => {
     const setSpy = vi.fn();
 
-    class Dummy {
+    class MyElement {
       set visible(value) {
         setSpy(value);
       }
     }
 
-    const context = new Dummy();
+    const element = new MyElement();
 
     execute("visible")
       .with([(v) => v === "true"])
-      .from(Dummy.prototype)
+      .from(MyElement.prototype)
       .whenAttributeChanges("visible");
 
-    context.attributeChangedCallback("hidden", "false", "true");
+    element.attributeChangedCallback("hidden", "false", "true");
 
     expect(setSpy).not.toHaveBeenCalled();
   });
@@ -73,20 +73,20 @@ describe("execute", () => {
   it.skip("não deve executar o setter se os valores forem iguais", () => {
     const setSpy = vi.fn();
 
-    class Dummy {
+    class MyElement {
       set visible(value) {
         setSpy(value);
       }
     }
 
-    const context = new Dummy();
+    const element = new MyElement();
 
     execute("visible")
       .with([(v) => v === "true"])
-      .from(Dummy.prototype)
+      .from(MyElement.prototype)
       .whenAttributeChanges("visible");
 
-    context.attributeChangedCallback("visible", "true", "true");
+    element.attributeChangedCallback("visible", "true", "true");
 
     expect(setSpy).not.toHaveBeenCalled();
   });

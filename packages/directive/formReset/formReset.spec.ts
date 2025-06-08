@@ -1,4 +1,6 @@
+import execute from "@directive/execute";
 import { describe, expect, it, vi } from "vitest";
+import formReset from "./formReset";
 
 vi.mock("@directive/execute", () => {
   return {
@@ -8,24 +10,21 @@ vi.mock("@directive/execute", () => {
   };
 });
 
-import execute from "@directive/execute";
-import formReset from "./formReset";
-
 describe("formReset", () => {
   it("deve encadear corretamente execute -> on -> after", () => {
-    const after = vi.fn();
-    const on = vi.fn(() => ({ after }));
-    const exec = vi.fn(() => ({ on }));
+    const afterMock = vi.fn();
+    const onMock = vi.fn(() => ({ after: afterMock }));
+    const executeMock = vi.fn(() => ({ on: onMock }));
 
-    execute.mockImplementation(exec);
+    execute.mockImplementation(executeMock);
 
     class MyElement {
       @formReset
       onFormReset() {}
     }
 
-    expect(exec).toHaveBeenCalledWith("onFormReset");
-    expect(on).toHaveBeenCalledWith(MyElement.prototype);
-    expect(after).toHaveBeenCalledWith("formResetCallback");
+    expect(executeMock).toHaveBeenCalledWith("onFormReset");
+    expect(onMock).toHaveBeenCalledWith(MyElement.prototype);
+    expect(afterMock).toHaveBeenCalledWith("formResetCallback");
   });
 });

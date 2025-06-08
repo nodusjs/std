@@ -1,4 +1,6 @@
+import execute from "@directive/execute";
 import { describe, expect, it, vi } from "vitest";
+import formAssociated from "./formAssociated";
 
 vi.mock("@directive/execute", () => {
   return {
@@ -8,24 +10,21 @@ vi.mock("@directive/execute", () => {
   };
 });
 
-import execute from "@directive/execute";
-import formAssociated from "./formAssociated";
-
 describe("formAssociated", () => {
   it("deve encadear corretamente execute -> on -> after", () => {
-    const after = vi.fn();
-    const on = vi.fn(() => ({ after }));
-    const exec = vi.fn(() => ({ on }));
+    const afterMock = vi.fn();
+    const onMock = vi.fn(() => ({ after: afterMock }));
+    const executeMock = vi.fn(() => ({ on: onMock }));
 
-    execute.mockImplementation(exec);
+    execute.mockImplementation(executeMock);
 
     class MyElement {
       @formAssociated
       onFormAssociated() {}
     }
 
-    expect(exec).toHaveBeenCalledWith("onFormAssociated");
-    expect(on).toHaveBeenCalledWith(MyElement.prototype);
-    expect(after).toHaveBeenCalledWith("formAssociatedCallback");
+    expect(executeMock).toHaveBeenCalledWith("onFormAssociated");
+    expect(onMock).toHaveBeenCalledWith(MyElement.prototype);
+    expect(afterMock).toHaveBeenCalledWith("formAssociatedCallback");
   });
 });

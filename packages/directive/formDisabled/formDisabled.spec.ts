@@ -1,4 +1,6 @@
+import execute from "@directive/execute";
 import { describe, expect, it, vi } from "vitest";
+import formDisabled from "./formDisabled";
 
 vi.mock("@directive/execute", () => {
   return {
@@ -8,16 +10,13 @@ vi.mock("@directive/execute", () => {
   };
 });
 
-import execute from "@directive/execute";
-import formDisabled from "./formDisabled";
-
 describe("formDisabled", () => {
   it("deve encadear corretamente execute -> on -> after", () => {
-    const after = vi.fn();
-    const on = vi.fn(() => ({ after }));
-    const exec = vi.fn(() => ({ on }));
+    const afterMock = vi.fn();
+    const onMock = vi.fn(() => ({ after: afterMock }));
+    const executeMock = vi.fn(() => ({ on: onMock }));
 
-    execute.mockImplementation(exec);
+    execute.mockImplementation(executeMock);
 
     class MyElement {
       @formDisabled
@@ -26,8 +25,8 @@ describe("formDisabled", () => {
 
     const target = MyElement.prototype;
 
-    expect(exec).toHaveBeenCalledWith("onFormDisabled");
-    expect(on).toHaveBeenCalledWith(target);
-    expect(after).toHaveBeenCalledWith("formDisabledCallback");
+    expect(executeMock).toHaveBeenCalledWith("onFormDisabled");
+    expect(onMock).toHaveBeenCalledWith(target);
+    expect(afterMock).toHaveBeenCalledWith("formDisabledCallback");
   });
 });
