@@ -7,11 +7,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import render from "./render";
 
 describe("render", () => {
-  let context;
+  let element;
   let target;
 
   beforeEach(() => {
-    context = {
+    element = {
       shadowRoot: {},
       [willPaintCallback]: vi.fn(),
       [didPaintCallback]: vi.fn(),
@@ -26,16 +26,16 @@ describe("render", () => {
     const sheet = {};
     const style = vi.fn(() => sheet);
 
-    context.shadowRoot.adoptedStyleSheets = [];
+    element.shadowRoot.adoptedStyleSheets = [];
 
     render(() => "<div></div>")
       .with([style])
       .on(target)
       .whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(style).toHaveBeenCalledWith(context);
-    expect(context.shadowRoot.adoptedStyleSheets).toEqual([sheet]);
+    await target.prototype.connectedCallback.call(element);
+    expect(style).toHaveBeenCalledWith(element);
+    expect(element.shadowRoot.adoptedStyleSheets).toEqual([sheet]);
   });
 
   it("deve aplicar todos os styles concatenados", async () => {
@@ -43,26 +43,26 @@ describe("render", () => {
     const sheet2 = {};
     const s1 = vi.fn(() => sheet1);
     const s2 = vi.fn(() => sheet2);
-    context.shadowRoot.adoptedStyleSheets = [];
+    element.shadowRoot.adoptedStyleSheets = [];
 
     render(() => "<div></div>")
       .with([s1, s2])
       .on(target)
       .whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(context.shadowRoot.adoptedStyleSheets).toEqual([sheet1, sheet2]);
+    await target.prototype.connectedCallback.call(element);
+    expect(element.shadowRoot.adoptedStyleSheets).toEqual([sheet1, sheet2]);
   });
 
   it("deve aplicar o resultado de component no innerHTML", async () => {
     const html = "<p>Hello</p>";
-    context.shadowRoot.innerHTML = "";
+    element.shadowRoot.innerHTML = "";
     const component = vi.fn(() => html);
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(context.shadowRoot.innerHTML).toBe(html);
+    await target.prototype.connectedCallback.call(element);
+    expect(element.shadowRoot.innerHTML).toBe(html);
   });
 
   it("deve executar tudo após o connectedCallback original", async () => {
@@ -75,36 +75,36 @@ describe("render", () => {
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
+    await target.prototype.connectedCallback.call(element);
     expect(steps).toEqual(["original", "render"]);
   });
 
   it("deve executar willPaintCallback antes do render", async () => {
-    const order = [];
-    context[willPaintCallback] = vi.fn(() => order.push("will"));
+    const steps = [];
+    element[willPaintCallback] = vi.fn(() => steps.push("will"));
     const component = () => {
-      order.push("render");
+      steps.push("render");
       return "ok";
     };
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(order).toEqual(["will", "render"]);
+    await target.prototype.connectedCallback.call(element);
+    expect(steps).toEqual(["will", "render"]);
   });
 
   it("deve executar didPaintCallback após o render", async () => {
-    const order = [];
-    context[didPaintCallback] = vi.fn(() => order.push("did"));
+    const steps = [];
+    element[didPaintCallback] = vi.fn(() => steps.push("did"));
     const component = () => {
-      order.push("render");
+      steps.push("render");
       return "ok";
     };
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(order).toEqual(["render", "did"]);
+    await target.prototype.connectedCallback.call(element);
+    expect(steps).toEqual(["render", "did"]);
   });
 
   it("deve definir isPainted como true", async () => {
@@ -112,8 +112,8 @@ describe("render", () => {
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(context[isPainted]).toBe(true);
+    await target.prototype.connectedCallback.call(element);
+    expect(element[isPainted]).toBe(true);
   });
 
   it("deve usar document.adoptedStyleSheets quando shadowRoot não existir", async () => {
@@ -125,25 +125,25 @@ describe("render", () => {
       set: globalAdopt,
     });
 
-    delete context.shadowRoot;
+    delete element.shadowRoot;
 
     render(() => "<div></div>")
       .with([style])
       .on(target)
       .whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
+    await target.prototype.connectedCallback.call(element);
     expect(globalAdopt).toHaveBeenCalledWith([sheet]);
   });
 
   it("deve usar this.innerHTML quando shadowRoot não existir", async () => {
     const html = "<x-rendered />";
     const component = vi.fn(() => html);
-    delete context.shadowRoot;
+    delete element.shadowRoot;
 
     render(component).with([]).on(target).whenConnected();
 
-    await target.prototype.connectedCallback.call(context);
-    expect(context.innerHTML).toBe(html);
+    await target.prototype.connectedCallback.call(element);
+    expect(element.innerHTML).toBe(html);
   });
 });
