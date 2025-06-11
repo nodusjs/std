@@ -6,5 +6,5 @@
  * @returns {boolean}
  */
 export function gt(x, y) {
-  return x > y;
+  return Number(x) > Number(y);
 }
