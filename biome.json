@@ -18,6 +18,7 @@
         "noCommaOperator": "off"
       },
       "suspicious": {
+        "noExplicitAny": "off",
         "noAssignInExpressions": "off",
         "noDuplicateTestHooks": "off"
       }
