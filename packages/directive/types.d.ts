@@ -4,6 +4,9 @@ import type { connected } from "./connected/types.d.ts";
 import type { define } from "./define/types.d.ts";
 import type { disconnected } from "./disconnected/types.d.ts";
 import type { formAssociated } from "./formAssociated/types.d.ts";
+import type { formDisabled } from "./formDisabled/types.d.ts";
+import type { formReset } from "./formReset/types.d.ts";
+import type { formSateRestore } from "./formStateRestore/types.d.ts";
 
 /**
  * @module @nodusjs/std/directive
@@ -22,5 +25,8 @@ declare module "@nodusjs/std/directive" {
     define,
     disconnected,
     formAssociated,
+    formDisabled,
+    formReset,
+    formStateRestore,
   };
 }
