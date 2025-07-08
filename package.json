@@ -53,5 +53,5 @@
   "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.18.3"
+  "version": "0.18.4"
 }
