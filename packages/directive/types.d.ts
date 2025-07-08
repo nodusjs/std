@@ -1,0 +1,14 @@
+import type { adopted } from "./adopted/types.d.ts";
+
+/**
+ * @module @nodusjs/std/directive
+ *
+ * @description
+ * Este módulo fornece uma coleção de decorators TypeScript projetados para
+ * simplificar a interação com o ciclo de vida nativo e as APIs de
+ * Web Components. Com eles, você pode escrever um código mais declarativo,
+ * limpo e focado na lógica de negócios do seu componente.
+ */
+declare module "@nodusjs/std/directive" {
+  export type { adopted };
+}

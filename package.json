@@ -35,7 +35,7 @@
       "require": "dist/spark.cjs"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "packages", "types.d.ts"],
   "license": "MIT",
   "main": "dist/std.cjs",
   "module": "dist/std.js",
@@ -52,5 +52,6 @@
   },
   "source": "src/index.js",
   "type": "module",
+  "types": "types.d.ts",
   "version": "0.18.1"
 }
