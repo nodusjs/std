@@ -1,5 +1,6 @@
 import type { adopted } from "./adopted/types.d.ts";
 import type { attributeChanged } from "./attributeChanged/types.d.ts";
+import type { connected } from "./connected/types.d.ts";
 
 /**
  * @module @nodusjs/std/directive
@@ -11,5 +12,5 @@ import type { attributeChanged } from "./attributeChanged/types.d.ts";
  * limpo e focado na lógica de negócios do seu componente.
  */
 declare module "@nodusjs/std/directive" {
-  export type { adopted, attributeChanged };
+  export type { adopted, attributeChanged, connected };
 }
