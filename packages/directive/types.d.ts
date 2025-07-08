@@ -3,6 +3,7 @@ import type { attributeChanged } from "./attributeChanged/types.d.ts";
 import type { connected } from "./connected/types.d.ts";
 import type { define } from "./define/types.d.ts";
 import type { disconnected } from "./disconnected/types.d.ts";
+import type { formAssociated } from "./formAssociated/types.d.ts";
 
 /**
  * @module @nodusjs/std/directive
@@ -14,5 +15,12 @@ import type { disconnected } from "./disconnected/types.d.ts";
  * limpo e focado na lógica de negócios do seu componente.
  */
 declare module "@nodusjs/std/directive" {
-  export type { adopted, attributeChanged, connected, define, disconnected };
+  export type {
+    adopted,
+    attributeChanged,
+    connected,
+    define,
+    disconnected,
+    formAssociated,
+  };
 }
