@@ -1,9 +1,9 @@
 /**
  * Incrementa o valor atual em 1.
  *
- * @param {number} x - Valor atual.
+ * @param {number|string} x - Valor atual.
  * @returns {number}
  */
 export function inc(x) {
-	return Number(x) + 1;
+  return Number(x) + 1;
 }

@@ -1,7 +1,7 @@
 /**
  * Retorna o número de chaves de um objeto.
  *
- * @param {object} x
+ * @param {object|string} x
  * @returns {number}
  */
 export function len(x) {

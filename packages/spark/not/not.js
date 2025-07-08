@@ -1,7 +1,7 @@
 /**
  * Inverte o valor booleano de `x`.
  *
- * @param {any} x
+ * @param {*} x
  * @returns {boolean}
  */
 export function not(x) {

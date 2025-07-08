@@ -1,8 +1,8 @@
 /**
  * Retorna `true` se `x` for maior que `y`.
  *
- * @param {number} x
- * @param {number} y
+ * @param {number|string} x
+ * @param {number|string} y
  * @returns {boolean}
  */
 export function gt(x, y) {
